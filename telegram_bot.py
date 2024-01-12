@@ -166,18 +166,26 @@ def manual_send_news(update, context: CallbackContext):
 # Функция для запуска бота
 def main():
     try:
+        logger.info("Запуск функции main...")
         token = os.getenv('TELEGRAM_BOT_TOKEN')
+        if token is None:
+            logger.error("Токен Telegram BOT не найден. Проверьте переменные окружения.")
+            return
+
+        logger.info("Создание объекта Updater...")
         updater = Updater(token)  # Изменено здесь
 
+        logger.info("Добавление обработчиков...")
         dp = updater.dispatcher
         dp.add_handler(CommandHandler('sendnews', manual_send_news))
 
-        # Настройка планировщика для регулярной отправки новостей
+        logger.info("Настройка планировщика...")
         scheduler = BackgroundScheduler(timezone=pytz.utc)
         job = partial(send_news, context=updater.job_queue)
         scheduler.add_job(job, 'interval', minutes=3)
         scheduler.start()
 
+        logger.info("Запуск polling...")
         updater.start_polling()
         updater.idle()
     except Exception as e:
