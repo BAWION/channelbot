@@ -1,4 +1,5 @@
 import os
+import openai
 import logging
 from datetime import datetime
 from functools import partial
@@ -6,7 +7,6 @@ from telegram.ext import Updater, CommandHandler, CallbackContext
 from apscheduler.schedulers.background import BackgroundScheduler
 import pytz
 import requests
-import openai
 from bs4 import BeautifulSoup
 from translator import translate_text
 
