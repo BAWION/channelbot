@@ -8,7 +8,7 @@ def translate_text(text, target_language='en'):
 
         # Using the correct method for text completion
         response = openai.Completion.create(
-            model="text-davinci-002",
+            model="text-davinci-003",  # Обновите модель здесь
             prompt=f"Translate the following text to {target_language}: {text}",
             max_tokens=50  # Specify the maximum number of tokens for the translation
         )
@@ -17,3 +17,4 @@ def translate_text(text, target_language='en'):
     except Exception as e:
         print(f"Error in text translation: {str(e)}")
         return text
+
