@@ -69,14 +69,22 @@ def parse_news(url):
 # Функция для отправки запроса на генерацию комментария от эксперта
 def generate_expert_commentary(news_text):
     try:
+        # Логируем отправляемый запрос
+        logger.info("Отправка запроса в OpenAI:")
+        logger.info(f"Текст новости: {news_text}")
+
         response = openai.Completion.create(
-            engine="text-davinci-003",  # Измените на последнюю версию модели
+            engine="text-davinci-003",
             prompt=f"Экспертный комментарий\n\n{news_text}\n\nКомментарий:",
             max_tokens=100
         )
+
+        # Логируем полученный ответ
+        logger.info("Ответ от OpenAI получен")
         return response.choices[0].text.strip()
     except Exception as e:
-        print(f"Ошибка при генерации экспертного комментария: {str(e)}")
+        # Логируем ошибку
+        logger.error(f"Ошибка при генерации экспертного комментария: {str(e)}")
         return "Произошла ошибка при генерации комментария."
 
 
