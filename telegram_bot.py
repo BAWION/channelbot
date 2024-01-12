@@ -6,8 +6,8 @@ from telegram.ext import Updater, CommandHandler, CallbackContext
 from apscheduler.schedulers.background import BackgroundScheduler
 import pytz
 import requests
+import openai
 from bs4 import BeautifulSoup
-from openai import OpenAI
 from translator import translate_text
 
 # Настройка логирования
@@ -69,8 +69,8 @@ def parse_news(url):
 # Функция для отправки запроса на генерацию комментария от эксперта
 def generate_expert_commentary(news_text):
     try:
-        response = openai_client.Completion.create(
-            model="text-davinci-002",
+        response = openai.Completion.create(
+            engine="text-davinci-002",
             prompt=f"Экспертный комментарий\n\n{news_text}\n\nКомментарий:",
             max_tokens=100
         )
@@ -78,6 +78,7 @@ def generate_expert_commentary(news_text):
     except Exception as e:
         print(f"Ошибка при генерации экспертного комментария: {str(e)}")
         return "Произошла ошибка при генерации комментария."
+
 
 
 # Функция для отправки новости и комментария в Telegram
