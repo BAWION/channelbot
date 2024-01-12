@@ -1,7 +1,7 @@
 import openai
 import os
 
-def translate_text(text, target_language='en'):
+def translate_text(text, target_language='ru'):
     try:
         # Ensure the OpenAI API key is set in environment variables
         openai.api_key = os.getenv('OPENAI_API_KEY')
